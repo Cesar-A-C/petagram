@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,22 +15,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.mod4_act1.adapters.PageAdapter;
 import com.example.mod4_act1.adapters.PetAdapter;
+import com.example.mod4_act1.controllers.fragments.PetFragment;
 import com.example.mod4_act1.models.PetModel;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
-    ArrayList<PetModel> pets;
-    ArrayList<String> petsNames;
-    ImageView favButton;
-    PetAdapter adapter;
-
-    private RecyclerView listPets;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private MaterialToolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,56 +45,66 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager2 = (ViewPager2) findViewById(R.id.viewPager);
+        setUpViewPager();
 
-        listPets = (RecyclerView) findViewById(R.id.rvPets);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        listPets.setLayoutManager(llm);
-
-        inicializePetsList();
-        inicializeAdapter();
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-
-        MenuItem favItem = menu.findItem(R.id.favorite);
-        favItem.setOnMenuItemClickListener(item -> {
-            Intent goToFavorites = new Intent(MainActivity.this, Favorites.class);
-            startActivity(goToFavorites);
-            return true;
-        });
-
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
 
+        if(id==R.id.favorite){
+            Intent goToFavorites = new Intent(MainActivity.this, Favorites.class);
+            startActivity(goToFavorites);
+        }
 
+        if(id==R.id.settings){
 
-    public void inicializePetsList(){
-        pets = new ArrayList<>();
+        }
 
-        pets.add(new PetModel("Ramón", R.drawable.cat,false, 0));
-        pets.add(new PetModel("Ignacio", R.drawable.cat,false,0));
-        pets.add(new PetModel("César", R.drawable.cat,false,0));
-        pets.add(new PetModel("Raúl", R.drawable.cat,false,0));
-        pets.add(new PetModel("Felipe", R.drawable.cat,false,0));
-        pets.add(new PetModel("Karencio", R.drawable.cat,false,0));
+        if(id==R.id.about){
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-    public  void inicializeAdapter(){
-        adapter = new PetAdapter(pets,this);
-        listPets.setAdapter(adapter);
+    private ArrayList<Fragment> addFragments(){
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new PetFragment());
+        fragments.add(new PetFragment());
+        return fragments;
     }
 
+    private void setUpViewPager() {
+        viewPager2.setAdapter(new PageAdapter(this, addFragments()));
 
+        new TabLayoutMediator(tabLayout, viewPager2,
+                (tab, position) ->{
+                    switch(position){
+                        case 0:
+                            tab.setText("Mascotas");
+                            break;
+                        case 1:
+                            tab.setText("Perfil");
+                            break;
+                    }
+                }
+        ).attach();
+    }
 }

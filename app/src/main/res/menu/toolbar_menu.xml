@@ -9,4 +9,17 @@
         android:actionLayout="@layout/fav_button"
         app:showAsAction="always"
         />
+
+    <item
+        android:id="@+id/settings"
+        android:title="Configuración"
+        android:orderInCategory="1"
+        />
+
+
+    <item
+        android:id="@+id/about"
+        android:title="Acerca De"
+        android:orderInCategory="2"
+        />
 </menu>
