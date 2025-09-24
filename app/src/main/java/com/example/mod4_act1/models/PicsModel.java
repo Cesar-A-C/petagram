@@ -1,12 +1,11 @@
 package com.example.mod4_act1.models;
 
 public class PicsModel {
+    int picLikes, pics;
 
-    int picLikes, pic;
-
-    public PicsModel(int picLikes, int pic) {
+    public PicsModel(int pics,int picLikes) {
         this.picLikes = picLikes;
-        this.pic = pic;
+        this.pics = pics;
     }
 
     public int getPicLikes() {
@@ -17,11 +16,11 @@ public class PicsModel {
         this.picLikes = picLikes;
     }
 
-    public int getPic() {
-        return pic;
+    public int getPics() {
+        return pics;
     }
 
-    public void setPic(int pic) {
-        this.pic = pic;
+    public void setPics(int pics) {
+        this.pics = pics;
     }
 }
