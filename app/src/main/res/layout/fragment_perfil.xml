@@ -12,10 +12,15 @@
         android:gravity="center"
         android:padding="10dp">
 
+
         <ImageView
-            android:src="@drawable/cat"
             android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            android:src="@drawable/cat"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_mask"
+            android:clipToOutline="true"/>
+
 
         <TextView
             android:layout_width="wrap_content"
