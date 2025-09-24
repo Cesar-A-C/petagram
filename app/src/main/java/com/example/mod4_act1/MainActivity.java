@@ -22,6 +22,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mod4_act1.adapters.PageAdapter;
 import com.example.mod4_act1.adapters.PetAdapter;
+import com.example.mod4_act1.controllers.fragments.PerfilFragment;
 import com.example.mod4_act1.controllers.fragments.PetFragment;
 import com.example.mod4_act1.models.PetModel;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Fragment> addFragments(){
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new PetFragment());
-        fragments.add(new PetFragment());
+        fragments.add(new PerfilFragment());
         return fragments;
     }
 
