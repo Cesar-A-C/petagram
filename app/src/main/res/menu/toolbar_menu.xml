@@ -11,8 +11,8 @@
         />
 
     <item
-        android:id="@+id/settings"
-        android:title="Configuración"
+        android:id="@+id/contact"
+        android:title="Contacto"
         android:orderInCategory="1"
         />
 

@@ -75,13 +75,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToFavorites);
         }
 
-        if(id==R.id.settings){
-
+        if(id==R.id.contact){
+            Intent goToContact = new Intent(MainActivity.this, Contact.class);
+            startActivity(goToContact);
         }
 
         if(id==R.id.about){
 
         }
+
         return super.onOptionsItemSelected(item);
     }
 
