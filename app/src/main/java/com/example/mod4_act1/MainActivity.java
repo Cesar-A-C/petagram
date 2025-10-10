@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(id==R.id.about){
-
+            Intent goToAbout = new Intent(MainActivity.this, About.class);
+            startActivity(goToAbout);
         }
 
         return super.onOptionsItemSelected(item);

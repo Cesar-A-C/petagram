@@ -6,5 +6,10 @@
     <string name="contact_email">Correo</string>
     <string name="contact_message">Mensaje</string>
     <string name="contact_send">Enviar</string>
-
+    <string name="contact_bar">Contacto</string>
+    <string name="about_title">Acerca De</string>
+    <string name="dev_name">César Aguirre Canela</string>
+    <string name="dev_career">Ingeniero en Sistemas Computacionales</string>
+    <string name="dev_bio">Desarrollador móvil con tres años de experiencia en Flutter, buscando aprender nuevas tecnologías en el campo, comenzando por la programación 100% Nativa en Android con Java</string>
+    <string name="dev_bio2">Decidí incursionar en el mundo de la programación por un profundo gusto y deseo de facilitar diversas tareas, así como de inmiscuir a más personas en territorio tecnológico</string>
 </resources>

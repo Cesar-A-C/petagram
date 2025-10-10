@@ -22,7 +22,7 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Petagram"
+            android:text="@string/contact_bar"
             android:textColor="@android:color/black"
             android:textSize="30sp"
             android:textStyle="bold"
