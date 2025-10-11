@@ -2,6 +2,7 @@ package com.example.mod4_act1;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -48,5 +49,13 @@ public class About extends AppCompatActivity {
             toolbar.getNavigationIcon().setTint(Color.BLACK);
         }
         /*********************************************************************************/
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

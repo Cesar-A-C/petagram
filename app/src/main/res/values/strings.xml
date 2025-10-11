@@ -2,7 +2,9 @@
     <string name="app_name">Mod4_Act1</string>
     <string name="string_user">Karencio</string>
     <string name="contact_title">Ingrese los datos del contacto</string>
+    <string name="contact_data">Ingresa tus datos de tu correo</string>
     <string name="contact_name">Nombre del usuario</string>
+    <string name="contact_pass">Password</string>
     <string name="contact_email">Correo</string>
     <string name="contact_message">Mensaje</string>
     <string name="contact_send">Enviar</string>

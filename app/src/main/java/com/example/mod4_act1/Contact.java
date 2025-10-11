@@ -2,6 +2,7 @@ package com.example.mod4_act1;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +28,7 @@ import javax.mail.internet.MimeMessage;
 
 
 public class Contact extends AppCompatActivity {
-    private EditText name,email,message;
+    private EditText name,email,message, ownEmail, ownPassword;
     private Button send;
     private Toolbar toolbar;
     @Override
@@ -49,10 +50,12 @@ public class Contact extends AppCompatActivity {
             String strName = name.getText().toString();
             String strEmail = email.getText().toString();
             String strMessage = message.getText().toString();
+            String strOwnEmail = ownEmail.getText().toString();
+            String strOwnPass = ownPassword.getText().toString();
             if(strName.isEmpty() || strEmail.isEmpty() || strMessage.isEmpty()){
                 Toast.makeText(this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
             }else{
-                new Thread(() -> sendEmail(strName, strEmail, strMessage)).start();
+                new Thread(() -> sendEmail(strName, strEmail, strMessage, strOwnEmail,strOwnPass)).start();
             }
 
         });
@@ -82,6 +85,8 @@ public class Contact extends AppCompatActivity {
         email = (EditText) findViewById(R.id.etEmail);
         message = (EditText) findViewById(R.id.etMessage);
         send = (Button) findViewById(R.id.btnSend);
+        ownEmail = (EditText) findViewById(R.id.etOwnEmail);
+        ownPassword = (EditText) findViewById(R.id.etOwnPass);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -92,18 +97,20 @@ public class Contact extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendEmail(String name, String email, String messageBody) {
-        final String username = "tuemail@gmail.com"; // tu correo
-        final String password = "tu_app_password";   // app password si usas Gmail
+    private void sendEmail(String name, String email, String messageBody, String ownEmail, String ownPass) {
+        final String username = ownEmail; // tu correo
+        final String password = ownPass;   // app password si usas Gmail
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         Session session = Session.getInstance(props,
                 new Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
@@ -113,7 +120,7 @@ public class Contact extends AppCompatActivity {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("destinatario@correo.com")); // a quién enviar
+                    InternetAddress.parse(email)); // a quién enviar
             message.setSubject("Nuevo mensaje de " + name);
             message.setText("Correo: " + email + "\n\nMensaje:\n" + messageBody);
 
@@ -123,12 +130,15 @@ public class Contact extends AppCompatActivity {
                     Toast.makeText(this, "Correo enviado correctamente!", Toast.LENGTH_SHORT).show()
             );
 
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (Exception e) { // captura cualquier excepción
+            e.printStackTrace(); // se verá en Logcat
+            Log.e("EMAIL_ERROR", "Error enviando correo", e); // log explícito
+
             runOnUiThread(() ->
-                    Toast.makeText(this, "Error al enviar correo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error al enviar correo: " + e.getMessage(), Toast.LENGTH_LONG).show()
             );
         }
     }
+
 
 }
