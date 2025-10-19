@@ -1,9 +1,13 @@
 package com.example.mod4_act1;
 
+import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mod4_act1.adapters.PetAdapter;
+import com.example.mod4_act1.database.Database;
 import com.example.mod4_act1.models.PetModel;
 
 import java.util.ArrayList;
@@ -74,12 +79,38 @@ public class Favorites extends AppCompatActivity {
 
     public void inicializePetsList(){
         pets = new ArrayList<>();
+        Database database = Database.getInstance(this);
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT pet.id, pet.unique_key, pet.name, pet.image, pet.likes " +
+                        "FROM tbl_pets pet " +
+                        "INNER JOIN tbl_favorites fav ON fav.id_pet = pet.id",
+                null
+        );
 
-        pets.add(new PetModel("Karencio", R.drawable.cat,false,0));
-        pets.add(new PetModel("Ramón", R.drawable.cat,false, 0));
-        pets.add(new PetModel("Ignacio", R.drawable.cat,false,0));
-        pets.add(new PetModel("Raúl", R.drawable.cat,false,0));
-        pets.add(new PetModel("Felipe", R.drawable.cat,false,0));
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndexOrThrow("id");
+            int keyIndex = cursor.getColumnIndexOrThrow("unique_key");
+            int nameIndex = cursor.getColumnIndexOrThrow("name");
+            int imageIndex = cursor.getColumnIndexOrThrow("image");
+            int likesIndex = cursor.getColumnIndexOrThrow("likes");
+
+            do {
+                int petId = cursor.getInt(idIndex);
+                String key = cursor.getString(keyIndex);
+                String name = cursor.getString(nameIndex);
+                int image = cursor.getInt(imageIndex);
+                int likes = cursor.getInt(likesIndex);
+
+                pets.add(new PetModel(key, name, image, true, 1));
+            } while(cursor.moveToNext());
+        } else {
+            Toast.makeText(this, "No hay mascotas en favoritos", Toast.LENGTH_SHORT).show();
+        }
+
+        cursor.close();
+        db.close();
     }
 
     public  void inicializeAdapter(ArrayList<PetModel> pets){

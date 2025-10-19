@@ -1,6 +1,7 @@
 package com.example.mod4_act1;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.example.mod4_act1.adapters.PageAdapter;
 import com.example.mod4_act1.adapters.PetAdapter;
 import com.example.mod4_act1.controllers.fragments.PerfilFragment;
 import com.example.mod4_act1.controllers.fragments.PetFragment;
+import com.example.mod4_act1.database.Database;
 import com.example.mod4_act1.models.PetModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
@@ -55,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager2 = (ViewPager2) findViewById(R.id.viewPager);
         setUpViewPager();
-
-
 
     }
 

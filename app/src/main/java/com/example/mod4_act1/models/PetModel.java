@@ -3,17 +3,27 @@ package com.example.mod4_act1.models;
 import java.io.Serializable;
 
 public class PetModel{
+    private String id;
     private String petName;
     private int petPicture, petLikes;
     private Boolean favorite;
 
 
 
-    public PetModel(String petName, int petPicture, Boolean favorite, int petLikes){
+    public PetModel(String id,String petName, int petPicture, Boolean favorite, int petLikes){
+        this.id = id;
         this.petName = petName;
         this.petPicture = petPicture;
         this.favorite = favorite;
         this.petLikes = petLikes;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPetName() {
